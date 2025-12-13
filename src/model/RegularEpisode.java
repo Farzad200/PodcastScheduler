@@ -1,5 +1,13 @@
 package model;
 
-public class RegularEpisode {
-    
+public class RegularEpisode extends Episode {
+
+    public RegularEpisode(String id, String title, int durationMinutes) {
+        super(id, title, durationMinutes);
+    }
+
+    @Override
+    public String getTypeLabel() {
+        return "Regular";
+    }
 }
