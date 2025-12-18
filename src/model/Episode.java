@@ -1,51 +1,74 @@
 package model;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 public abstract class Episode implements Publishable {
 
-    private String id;
-    private String title;
-    private int durationMinutes;
-    private LocalDateTime scheduledDateTime;
-    private EpisodeStatus status = EpisodeStatus.DRAFT;
+    protected String id;
+    protected String title;
+    protected int durationMinutes;
+    protected EpisodeStatus status;
+    protected LocalDateTime scheduledDateTime;
 
-    public Episode(String id, String title, int durationMinutes) {
-        this.id = id;
+    public Episode(String title, int durationMinutes) {
+        this.id = UUID.randomUUID().toString();
         this.title = title;
         this.durationMinutes = durationMinutes;
+        this.status = EpisodeStatus.DRAFT;
+        this.scheduledDateTime = null;
     }
 
-    public String getId() { return id; }
-    public String getTitle() { return title; }
-    public int getDurationMinutes() { return durationMinutes; }
-    public LocalDateTime getScheduledDateTime() { return scheduledDateTime; }
+    public String getId() {
+        return id;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public int getDurationMinutes() {
+        return durationMinutes;
+    }
 
     public EpisodeStatus getStatus() {
         return status;
     }
 
-    public void setScheduledDateTime(LocalDateTime dateTime) {
-        this.scheduledDateTime = dateTime;
+    public LocalDateTime getScheduledDateTime() {
+        return scheduledDateTime;
     }
 
-    public abstract String getTypeLabel();
-
     @Override
-    public void schedule(LocalDateTime dateTime) throws ScheduleConflictException {
+    public void schedule(LocalDateTime dateTime) {
         this.scheduledDateTime = dateTime;
         this.status = EpisodeStatus.SCHEDULED;
     }
 
     @Override
-    public void publish(LocalDateTime now) {
-        if (canPublish(now)) {
-            this.status = EpisodeStatus.PUBLISHED;
-        }
+    public boolean canPublish(LocalDateTime now) {
+        return status == EpisodeStatus.SCHEDULED
+                && scheduledDateTime != null
+                && !now.isBefore(scheduledDateTime);
     }
 
     @Override
-    public boolean canPublish(LocalDateTime now) {
-        return scheduledDateTime != null && !scheduledDateTime.isAfter(now);
+    public void publish(LocalDateTime now) {
+        if (canPublish(now)) {
+            status = EpisodeStatus.PUBLISHED;
+        }
+    }
+
+    public abstract String getTypeLabel();
+
+    @Override
+    public String toString() {
+        String timeInfo = (scheduledDateTime == null)
+                ? "Not scheduled"
+                : scheduledDateTime.toString();
+
+        return "[" + getTypeLabel() + "] "
+                + title + " (" + durationMinutes + " min) - "
+                + status + " | " + timeInfo;
     }
 }

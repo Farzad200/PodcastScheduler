@@ -3,7 +3,6 @@ package model;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 import java.io.*;
 import java.nio.file.*;
 
@@ -17,13 +16,12 @@ public class EpisodeRepository {
 
     // ---------------- CREATE ----------------
     public Episode createEpisode(String type, String title, int durationMinutes) {
-        String id = UUID.randomUUID().toString();
         Episode episode;
 
         if (type.equalsIgnoreCase("Regular")) {
-            episode = new RegularEpisode(id, title, durationMinutes);
+            episode = new RegularEpisode(title, durationMinutes);
         } else {
-            episode = new BonusEpisode(id, title, durationMinutes);
+            episode = new BonusEpisode(title, durationMinutes);
         }
 
         episodes.add(episode);
@@ -84,9 +82,8 @@ public class EpisodeRepository {
             while ((line = reader.readLine()) != null) {
 
                 String[] parts = line.split("\\|");
-                if (parts.length < 6) continue; // safety check
+                if (parts.length < 6) continue;
 
-                String id = parts[0];
                 String type = parts[1];
                 String title = parts[2];
                 int duration = Integer.parseInt(parts[3]);
@@ -97,16 +94,12 @@ public class EpisodeRepository {
                         : LocalDateTime.parse(parts[5]);
 
                 Episode episode = type.equalsIgnoreCase("Regular")
-                        ? new RegularEpisode(id, title, duration)
-                        : new BonusEpisode(id, title, duration);
+                        ? new RegularEpisode(title, duration)
+                        : new BonusEpisode(title, duration);
 
                 if (dateTime != null) {
-    try {
-        episode.schedule(dateTime);
-    } catch (ScheduleConflictException e) {
-    }
-}
-
+                    episode.schedule(dateTime);
+                }
 
                 if (status == EpisodeStatus.PUBLISHED) {
                     episode.publish(LocalDateTime.now());

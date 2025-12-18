@@ -1,0 +1,69 @@
+/* --- Global Styles --- */
+.root {
+    -fx-background-color: #2D3748; /* Dark gray background */
+    -fx-font-family: "Segoe UI", Arial, sans-serif;
+}
+
+.label {
+    -fx-text-fill: #E2E8F0; /* Light gray text */
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+}
+
+/* --- Input Control Styles --- */
+.text-field, .combo-box, .date-picker {
+    -fx-background-color: #4A5568; /* Medium gray background */
+    -fx-text-fill: #FFFFFF; /* White text */
+    -fx-font-size: 13px;
+    -fx-background-radius: 5;
+    -fx-border-color: #718096;
+    -fx-border-radius: 5;
+}
+
+.date-picker .arrow-button {
+    -fx-background-color: #718096;
+}
+
+/* --- Button Styles --- */
+.button {
+    -fx-background-color: #3182CE; /* Vibrant blue */
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-font-size: 14px;
+    -fx-background-radius: 8;
+    -fx-padding: 8px 16px;
+}
+
+.button:hover {
+    -fx-background-color: #2B6CB0; /* Darker blue on hover */
+    -fx-cursor: hand;
+}
+
+.button:pressed {
+    -fx-background-color: #2C5282; /* Even darker blue when pressed */
+}
+
+/* --- ListView Styles --- */
+.list-view {
+    -fx-background-color: #4A5568;
+    -fx-border-color: #718096;
+    -fx-border-width: 1px;
+    -fx-background-insets: 0;
+}
+
+.list-cell {
+    -fx-background-color: transparent;
+    -fx-text-fill: #E2E8F0; /* Light gray text for items */
+    -fx-padding: 10px;
+    -fx-font-size: 13px;
+}
+
+.list-cell:filled:hover {
+    -fx-background-color: #718096; /* Medium gray on hover */
+    -fx-text-fill: white;
+}
+
+.list-cell:filled:selected {
+    -fx-background-color: #3182CE; /* Blue for selected item */
+    -fx-text-fill: white;
+}

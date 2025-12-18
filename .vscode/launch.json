@@ -1,0 +1,12 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Run PodcastSchedulerApp",
+            "request": "launch",
+            "mainClass": "app.PodcastSchedulerApp",
+            "vmArgs": "--module-path \"C:\\javaFX\\javafx-sdk-17.0.17\\lib\" --add-modules javafx.controls,javafx.fxml"
+        }
+    ]
+}
